@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react';
 import ExaSearch from './components/ExaSearch';
 
