@@ -11,25 +11,7 @@ import {
   CssBaseline,
   Box,
 } from '@mui/material';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import fetch, { Headers } from 'cross-fetch';
-
-const theme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#90caf9',
-    },
-    background: {
-      default: '#121212',
-      paper: '#1d1d1d',
-    },
-    text: {
-      primary: '#ffffff',
-      secondary: '#b0bec5',
-    },
-  },
-});
 
 const ExaSearch = () => {
   const [query, setQuery] = useState('');
@@ -65,56 +47,48 @@ const ExaSearch = () => {
   };
 
   return (
-    <ThemeProvider theme={theme}>
+    <Container className="container">
       <CssBaseline />
-      <Container className="container">
-      <Box sx={{ my: 0, width: '100%' }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Lucky 7 Links
-          </Typography>
-          <TextField
-            className="search-field"
-            label="Search query"
-            variant="outlined"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            InputLabelProps={{
-              style: { color: theme.palette.text.primary },
-            }}
-            InputProps={{
-              style: { color: theme.palette.text.primary },
-            }}
-          />
-          <Button
-            className="search-button"
-            variant="contained"
-            color="primary"
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-          {loading && <CircularProgress sx={{ mt: 2 }} />}
-          <List className="results-list">
-            {results.map((result) => (
-              <ListItem
-                className="result-item"
-                button
-                component="a"
-                href={result.url}
-                target="_blank"
-                key={result.id}
-              >
-                <ListItemText
-                  primary={result.title}
-                  secondary={result.url}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Container>
-    </ThemeProvider>
+      <Box sx={{ my: 1, width: '100%' }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Lucky 7 Links
+        </Typography>
+        <TextField
+          className="search-field"
+          label="Search query"
+          variant="outlined"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <Button
+          className="search-button"
+          variant="contained"
+          color="primary"
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+        {loading && <CircularProgress sx={{ mt: 2 }} />}
+        <List className="results-list">
+          {results.map((result) => (
+            <ListItem
+              className="result-item"
+              ListItemButton
+              component="a"
+              href={result.url}
+              target="_blank"
+              key={result.id}
+            >
+              <ListItemText
+                primary={result.title}
+                secondary={result.url}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Container>
   );
 };
 
