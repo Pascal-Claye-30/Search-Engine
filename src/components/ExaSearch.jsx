@@ -47,49 +47,48 @@ const ExaSearch = () => {
   };
 
   return (
-    <Container className="container">
+    <Container>
       <CssBaseline />
-      <Box sx={{ my: 1, width: '100%' }}>
+      <Box sx={{ my: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Lucky 7 Links
-        </Typography>
+          Lucky Search
+          </Typography>
         <TextField
-          className="search-field"
+          fullWidth
           label="Search query"
           variant="outlined"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-        />
-        <Button
-          className="search-button"
-          variant="contained"
-          color="primary"
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-        {loading && <CircularProgress sx={{ mt: 2 }} />}
-        <List className="results-list">
-          {results.map((result) => (
-            <ListItem
-              className="result-item"
-              ListItemButton
-              component="a"
-              href={result.url}
-              target="_blank"
-              key={result.id}
-            >
-              <ListItemText
-                primary={result.title}
-                secondary={result.url}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    </Container>
-  );
-};
-
-export default ExaSearch;
+          />
+          <Button
+            sx={{ mt: 2 }}
+            variant="contained"
+            color="primary"
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+          {loading && <CircularProgress sx={{ mt: 2 }} />}
+          <List sx={{ mt: 2 }}>
+            {results.map((result) => (
+              <ListItem
+                button
+                component="a"
+                href={result.url}
+                target="_blank"
+                key={result.id}
+              >
+                <ListItemText
+                  primary={result.title}
+                  secondary={result.url}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Container>
+    );
+  };
+  
+  export default ExaSearch;

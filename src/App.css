@@ -1,11 +1,9 @@
+/* src/App.css */
+
 body {
   background-color: #f4f6f8;
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
 }
 
 header {
@@ -15,15 +13,12 @@ header {
 }
 
 .container {
-  margin: 0;
+  margin: 20px auto;
   padding: 20px;
   max-width: 800px;
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .search-field {
@@ -32,11 +27,11 @@ header {
 }
 
 .search-button {
+  display: block;
   width: 100%;
 }
 
 .results-list {
-  width: 100%;
   margin-top: 20px;
 }
 
