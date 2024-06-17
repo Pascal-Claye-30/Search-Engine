@@ -43,7 +43,7 @@ const ExaSearch = () => {
     const response = await fetch('https://api.exa.ai/search', {
       method: 'POST',
       headers: new Headers({
-        'x-api-key': '613b2b11-6fd3-4517-bffb-46df4a0b07d3',
+        'x-api-key': 'EXA_API_KEY',
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
