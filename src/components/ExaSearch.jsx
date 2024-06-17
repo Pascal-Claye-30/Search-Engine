@@ -22,6 +22,8 @@ const ExaSearch = () => {
     setLoading(true);
     setResults([]);
 
+    const jobSpecificQuery = `${query} new job openings not filled`;
+
     const response = await fetch('https://api.exa.ai/search', {
       method: 'POST',
       headers: new Headers({
@@ -29,14 +31,21 @@ const ExaSearch = () => {
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
-        query,
+        query: jobSpecificQuery,
         numResults: 10,
         useAutoprompt: true, // Ensures the query is adapted to Exa's search style
+        category: 'company', // Focus on company-related data if applicable
       }),
     });
 
     const data = await response.json();
-    setResults(data.results);
+
+    // Filter results to show only new job positions not filled
+    const filteredResults = data.results.filter(result =>
+      result.title && result.title.toLowerCase().includes('job')
+    );
+
+    setResults(filteredResults);
     setLoading(false);
   };
 
@@ -51,44 +60,44 @@ const ExaSearch = () => {
       <CssBaseline />
       <Box sx={{ my: 1 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Lucky Search
-          </Typography>
+          Find Hidden Job Positions
+        </Typography>
         <TextField
           fullWidth
-          label="Search query"
+          label="Search job positions"
           variant="outlined"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          />
-          <Button
-            sx={{ mt: 2 }}
-            variant="contained"
-            color="primary"
-            onClick={handleSearch}
-          >
-            Search
-          </Button>
-          {loading && <CircularProgress sx={{ mt: 2 }} />}
-          <List sx={{ mt: 2 }}>
-            {results.map((result) => (
-              <ListItem
-                button
-                component="a"
-                href={result.url}
-                target="_blank"
-                key={result.id}
-              >
-                <ListItemText
-                  primary={result.title}
-                  secondary={result.url}
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
-      </Container>
-    );
-  };
-  
-  export default ExaSearch;
+        />
+        <Button
+          sx={{ mt: 2 }}
+          variant="contained"
+          color="primary"
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+        {loading && <CircularProgress sx={{ mt: 2 }} />}
+        <List sx={{ mt: 2 }}>
+          {results.map((result) => (
+            <ListItem
+              ListItemButton
+              component="a"
+              href={result.url}
+              target="_blank"
+              key={result.id}
+            >
+              <ListItemText
+                primary={result.title}
+                secondary={result.url}
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+    </Container>
+  );
+};
+
+export default ExaSearch;
