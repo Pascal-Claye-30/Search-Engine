@@ -12,8 +12,27 @@ import {
   Toolbar,
   CssBaseline,
   Box,
+  ThemeProvider,
+  createTheme
 } from '@mui/material';
 import fetch, { Headers } from 'cross-fetch';
+
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#90caf9',
+    },
+    background: {
+      default: '#242424',
+      paper: '#1d1d1d',
+    },
+    text: {
+      primary: '#ffffff',
+      secondary: '#b0bec5',
+    },
+  },
+});
 
 const ExaSearch = () => {
   const [query, setQuery] = useState('');
@@ -27,12 +46,12 @@ const ExaSearch = () => {
     const response = await fetch('https://api.exa.ai/search', {
       method: 'POST',
       headers: new Headers({
-        'x-api-key': 'YOUR_API_KEY_HERE',
+        'x-api-key': 'EXA_API_KEY',
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
         query,
-        numResults: 10,
+        numResults: 7,
         useAutoprompt: true, // Ensures the query is adapted to Exa's search style
       }),
     });
@@ -49,52 +68,61 @@ const ExaSearch = () => {
   };
 
   return (
-    <Container>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">Secret Search</Typography>
-        </Toolbar>
-      </AppBar>
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Embeddings-based Search Engine
-        </Typography>
-        <TextField
-          fullWidth
-          label="Search query"
-          variant="outlined"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
-        <Button
-          sx={{ mt: 2 }}
-          variant="contained"
-          color="primary"
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-        {loading && <CircularProgress sx={{ mt: 2 }} />}
-        <List sx={{ mt: 2 }}>
-          {results.map((result) => (
-            <ListItem
-              ListItemButton
-              component="a"
-              href={result.url}
-              target="_blank"
-              key={result.id}
-            >
-              <ListItemText
-                primary={result.title}
-                secondary={result.url}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    </Container>
+      <Container className="container">
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">Embeddings-based Search Engine</Typography>
+          </Toolbar>
+        </AppBar>
+        <Box sx={{ my: 1, width: '100%' }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Secret Search
+          </Typography>
+          <TextField
+            className="search-field"
+            label="Search query"
+            variant="outlined"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            InputLabelProps={{
+              style: { color: theme.palette.text.primary },
+            }}
+            InputProps={{
+              style: { color: theme.palette.text.primary },
+            }}
+          />
+          <Button
+            className="search-button"
+            variant="contained"
+            color="primary"
+            onClick={handleSearch}
+          >
+            Search
+          </Button>
+          {loading && <CircularProgress sx={{ mt: 2 }} />}
+          <List className="results-list">
+            {results.map((result) => (
+              <ListItem
+                className="result-item"
+                ListItemButton
+                component="a"
+                href={result.url}
+                target="_blank"
+                key={result.id}
+              >
+                <ListItemText
+                  primary={result.title}
+                  secondary={result.url}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Container>
+    </ThemeProvider>
   );
 };
 

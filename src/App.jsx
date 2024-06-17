@@ -1,9 +1,10 @@
 import React from 'react';
 import ExaSearch from './components/ExaSearch';
+import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <ExaSearch />
     </div>
   );
