@@ -25,12 +25,12 @@ const ExaSearch = () => {
     const response = await fetch('https://api.exa.ai/search', {
       method: 'POST',
       headers: new Headers({
-        'x-api-key': 'EXA_API_KEY',
+        'x-api-key': 'YOUR_API_KEY_HERE',
         'Content-Type': 'application/json',
       }),
       body: JSON.stringify({
         query,
-        numResults: 7,
+        numResults: 10,
         useAutoprompt: true, // Ensures the query is adapted to Exa's search style
       }),
     });
